@@ -1,0 +1,48 @@
+<div class="example-container mat-elevation-z8">
+  <div class="example-loading-shade"
+       *ngIf="isLoadingResults">
+    <mat-spinner *ngIf="isLoadingResults"></mat-spinner>
+  </div>
+  <div class="button-row">
+    <a mat-flat-button color="primary" (click)="heroDetails()"><mat-icon>info</mat-icon></a>
+  </div>
+  <mat-card class="example-card">
+    <form [formGroup]="heroForm" (ngSubmit)="onFormSubmit(heroForm.value)">
+      <mat-form-field class="example-full-width">
+        <input matInput placeholder="Nome do herói" formControlName="hero_name"
+               [errorStateMatcher]="matcher">
+        <mat-error>
+          <span *ngIf="!heroForm.get('hero_name').valid && heroForm.get('hero_name').touched">Insira o nome do Herói</span>
+        </mat-error>
+      </mat-form-field>
+
+
+
+      <mat-form-field>
+        <mat-select placeholder="Universo" formControlName="hero_universe">
+          <mat-option *ngFor="let universe of universeList" value="{{universe.id}}">
+            {{universe.name}}
+          </mat-option>
+        </mat-select>
+        <mat-error>
+          <span *ngIf="!heroForm.get('hero_universe').valid && heroForm.get('hero_universe').touched">Insira o universo do Herói</span>
+        </mat-error>
+      </mat-form-field>
+
+
+
+      <mat-form-field>
+        <mat-label>Poderes</mat-label>
+        <mat-select formControlName="hero_powers" multiple>
+          <mat-option *ngFor="let power of powerList" value="{{power.id}}">{{power.name}}</mat-option>
+        </mat-select>
+        <mat-error>
+          <span *ngIf="!heroForm.get('hero_powers').valid && heroForm.get('hero_powers').touched">Ao menos 1 poder</span>
+        </mat-error>
+      </mat-form-field >
+      <div class="button-row">
+        <button type="submit" [disabled]="!heroForm.valid" mat-flat-button color="primary"><mat-icon>save</mat-icon></button>
+      </div>
+    </form>
+  </mat-card>
+</div>
